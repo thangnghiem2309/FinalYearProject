@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tặng Thảo My</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* Đặt hướng theo cột */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(to bottom right, #ffebee, #fce4ec); /* Gradient nền nhẹ nhàng */
+            font-family: 'Arial', sans-serif;
+            position: relative; /* Để cơn mưa trái tim có thể được đặt chính xác */
+            overflow: hidden; /* Ẩn phần tràn ra ngoài */
+        }
+
+        .greeting, .message, .gift { /* Áp dụng cùng kiểu cho cả ba dòng */
+            font-size: 48px; /* Cỡ chữ giống nhau */
+            font-weight: bold;
+            color: #ff69b4; /* Màu hồng sáng */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0; /* Bắt đầu với độ mờ 0 */
+            transition: opacity 0.5s ease, transform 0.3s;
+            margin-top: 20px; /* Khoảng cách giữa các dòng chữ */
+        }
+
+        .message, .gift {
+            font-size: 24px; /* Cỡ chữ nhỏ hơn cho dòng này */
+            color: #ff4500; /* Màu cam */
+        }
+
+        .greeting.show, .message.show, .gift.show {
+            opacity: 1; /* Đặt độ mờ thành 1 khi hiển thị */
+            transform: scale(1.1); /* Phóng to khi hiển thị */
+        }
+
+        /* Hiệu ứng trái tim */
+        .heart {
+            position: absolute;
+            top: -50px; /* Bắt đầu từ trên cùng */
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Nút dễ thương */
+        .cute-button {
+            margin-top: 20px; /* Khoảng cách với dòng chữ */
+            padding: 10px 20px; /* Kích thước nút */
+            font-size: 20px; /* Kích thước chữ trong nút */
+            color: white; /* Màu chữ */
+            background-color: #ff69b4; /* Màu nền */
+            border: none; /* Không có viền */
+            border-radius: 25px; /* Bo góc nút */
+            cursor: pointer; /* Đổi con trỏ khi hover */
+            transition: transform 0.2s; /* Hiệu ứng khi hover */
+        }
+
+        .cute-button:hover {
+            transform: scale(1.1); /* Phóng to khi hover */
+        }
+
+        .cute-button.hidden {
+            display: none; /* Ẩn nút */
+        }
+    </style>
+</head>
+<body>
+    <div class="greeting" id="greeting">Thảo My ơi!</div>
+    <div class="message" id="message">Anh xin lỗi vì đã để em đợi lâu!</div>
+    <div class="gift" id="gift">Đây là món quà anh muốn dành tặng em!</div>
+    <button class="cute-button hidden" id="cuteButton">Em nhấn vào đây!</button>
+
+    <script>
+        // Đợi 2 giây trước khi hiển thị chữ "Hello Mai Thảo My!"
+        setTimeout(() => {
+            const greeting = document.getElementById('greeting');
+            greeting.classList.add('show'); // Thêm lớp 'show' để hiển thị chữ
+        }, 2000); // Thời gian hẹn giờ 2 giây
+
+        // Đợi 4 giây để hiển thị dòng chữ thứ hai và ẩn dòng chữ đầu tiên
+        setTimeout(() => {
+            const greeting = document.getElementById('greeting');
+            greeting.classList.remove('show'); // Ẩn dòng chữ đầu tiên
+
+            const message = document.getElementById('message');
+            message.classList.add('show'); // Thêm lớp 'show' để hiển thị dòng chữ thứ hai
+        }, 4000); // Thời gian hẹn giờ 4 giây
+
+        // Đợi 6 giây để hiển thị dòng chữ thứ ba và ẩn dòng chữ thứ hai
+        setTimeout(() => {
+            const message = document.getElementById('message');
+            message.classList.remove('show'); // Ẩn dòng chữ thứ hai
+
+            const gift = document.getElementById('gift');
+            gift.classList.add('show'); // Thêm lớp 'show' để hiển thị dòng chữ thứ ba
+        }, 6000); // Thời gian hẹn giờ 6 giây
+
+        // Đợi 8 giây để hiển thị nút dễ thương
+        setTimeout(() => {
+            const cuteButton = document.getElementById('cuteButton');
+            cuteButton.classList.remove('hidden'); // Hiện nút dễ thương
+        }, 8000); // Thời gian hẹn giờ 8 giây
+
+        // Thêm sự kiện click vào nút
+        document.getElementById('cuteButton').onclick = function() {
+            window.location.href = 'https://www.youtube.com/watch?v=_LJiKvXkNiE'; // Chuyển hướng đến trang video
+        };
+
+        // Hàm tạo trái tim ngẫu nhiên
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw'; // Vị trí ngẫu nhiên trên chiều ngang
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // Thời gian rơi ngẫu nhiên
+            document.body.appendChild(heart);
+
+            // Xoá trái tim sau khi nó rơi
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        // Tạo cơn mưa trái tim mỗi 300ms
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
